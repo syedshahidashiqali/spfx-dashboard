@@ -1,6 +1,7 @@
 import { WebPartContext } from "@microsoft/sp-webpart-base";
 import { EnvironmentType } from "@microsoft/sp-core-library";
 import { SPHttpClient } from "@microsoft/sp-http";
+import { IListCollection } from "./IList";
 
 class SharePointServiceManager {
   public context: WebPartContext;
@@ -26,6 +27,12 @@ class SharePointServiceManager {
       .catch((error) => {
         return Promise.reject(error);
       });
+  }
+
+  public getLists(showHiddenList: boolean = false): Promise<IListCollection> {
+    return this.get(
+      `/_api/lists${!showHiddenList ? "?$filter=Hidden eq false" : ""}`
+    );
   }
 }
 
