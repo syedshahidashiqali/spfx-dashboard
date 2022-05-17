@@ -1,6 +1,10 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import { Version } from "@microsoft/sp-core-library";
+import {
+  Environment,
+  EnvironmentType,
+  Version,
+} from "@microsoft/sp-core-library";
 import {
   IPropertyPaneConfiguration,
   PropertyPaneTextField,
@@ -16,6 +20,8 @@ export interface IDashWebPartProps {
   description: string;
 }
 
+import { SPHttpClient } from "@microsoft/sp-http";
+
 export default class DashWebPart extends BaseClientSideWebPart<IDashWebPartProps> {
   private _isDarkTheme: boolean = false;
   private _environmentMessage: string = "";
@@ -23,7 +29,18 @@ export default class DashWebPart extends BaseClientSideWebPart<IDashWebPartProps
   protected onInit(): Promise<void> {
     this._environmentMessage = this._getEnvironmentMessage();
 
-    return super.onInit();
+    return super.onInit().then(() => {
+      this.context.spHttpClient
+        .get(
+          `${this.context.pageContext.web.absoluteUrl}/_api/lists`,
+          SPHttpClient.configurations.v1
+        )
+        .then((response) => {
+          response.json().then((json: any) => {
+            console.log(json);
+          });
+        });
+    });
   }
 
   public render(): void {
