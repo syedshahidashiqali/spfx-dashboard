@@ -21,6 +21,7 @@ export interface IDashWebPartProps {
 }
 
 import { SPHttpClient } from "@microsoft/sp-http";
+import SharePointService from "../../services/SharePoint/SharePointService";
 
 export default class DashWebPart extends BaseClientSideWebPart<IDashWebPartProps> {
   private _isDarkTheme: boolean = false;
@@ -30,16 +31,7 @@ export default class DashWebPart extends BaseClientSideWebPart<IDashWebPartProps
     this._environmentMessage = this._getEnvironmentMessage();
 
     return super.onInit().then(() => {
-      this.context.spHttpClient
-        .get(
-          `${this.context.pageContext.web.absoluteUrl}/_api/lists`,
-          SPHttpClient.configurations.v1
-        )
-        .then((response) => {
-          response.json().then((json: any) => {
-            console.log(json);
-          });
-        });
+      SharePointService.setup(this.context, Environment.type);
     });
   }
 
