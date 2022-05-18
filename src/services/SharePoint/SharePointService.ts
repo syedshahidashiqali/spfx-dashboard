@@ -3,6 +3,7 @@ import { EnvironmentType } from "@microsoft/sp-core-library";
 import { SPHttpClient } from "@microsoft/sp-http";
 import { IListCollection } from "./IList";
 import { IListItemCollection } from "./IListItem";
+import { IListFieldCollection } from "./IListField";
 
 class SharePointServiceManager {
   public context: WebPartContext;
@@ -43,6 +44,17 @@ class SharePointServiceManager {
     return this.get(
       `/_api/lists/getbyid("${listId}")/items${
         selectedFields ? `?$select=${selectedFields.join(",")}` : ""
+      }`
+    );
+  }
+
+  public getListFields(
+    listId: string,
+    showHiddenFields: boolean = false
+  ): Promise<IListFieldCollection> {
+    return this.get(
+      `/_api/lists/getbyid('${listId}')/fields${
+        !showHiddenFields ? "?$filter=Hidden eq false" : ""
       }`
     );
   }
