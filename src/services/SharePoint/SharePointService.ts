@@ -24,6 +24,7 @@ class SharePointServiceManager {
         SPHttpClient.configurations.v1
       )
       .then((response) => {
+        if (!response.ok) return Promise.reject("GET request failed.");
         return response.json();
       })
       .catch((error) => {
