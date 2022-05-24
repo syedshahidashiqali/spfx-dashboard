@@ -1,6 +1,9 @@
 import * as React from "react";
 import { IListItem } from "../../../services/SharePoint/IListItem";
 import SharePointService from "../../../services/SharePoint/SharePointService";
+import { Bar } from "react-chartjs-2";
+import { Chart as Charts, registerables } from "chart.js";
+Charts.register(...registerables);
 
 export interface IChartProps {
   chartTitle: string;
@@ -33,6 +36,26 @@ export default class Chart extends React.Component<IChartProps, IChartState> {
         <h1>{this.props.chartTitle}</h1>
 
         {this.state.error && <p>{this.state.error}</p>}
+
+        <Bar
+          data={{
+            labels: ["Jan", "Feb", "Mar"],
+            datasets: [
+              {
+                label: "Apples",
+                data: [15, 11, 9],
+              },
+              {
+                label: "Bananas",
+                data: [12, 5, 4],
+              },
+              {
+                label: "Guava",
+                data: [2, 12, 14],
+              },
+            ],
+          }}
+        />
 
         <ul>
           {this.state.items.map((item) => {
