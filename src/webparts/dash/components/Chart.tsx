@@ -21,6 +21,7 @@ export default class Chart extends React.Component<IChartProps, IChartState> {
 
     // Bind methods
     this.getItems = this.getItems.bind(this);
+    this.chartData = this.chartData.bind(this);
 
     // Set initial state
     this.state = {
@@ -37,25 +38,7 @@ export default class Chart extends React.Component<IChartProps, IChartState> {
 
         {this.state.error && <p>{this.state.error}</p>}
 
-        <Bar
-          data={{
-            labels: ["Jan", "Feb", "Mar"],
-            datasets: [
-              {
-                label: "Apples",
-                data: [15, 11, 9],
-              },
-              {
-                label: "Bananas",
-                data: [12, 5, 4],
-              },
-              {
-                label: "Guava",
-                data: [2, 12, 14],
-              },
-            ],
-          }}
-        />
+        <Bar data={this.chartData()} />
 
         <ul>
           {this.state.items.map((item) => {
@@ -77,7 +60,7 @@ export default class Chart extends React.Component<IChartProps, IChartState> {
   public getItems(): void {
     this.setState({ loading: true });
 
-    SharePointService.getListItems("f9507a46-bf04-44ad-98e1-e88569360385")
+    SharePointService.getListItems("8eedf5f2-c649-495f-90ed-b3c390f6892a")
       .then((items) => {
         this.setState({
           items: items.value,
@@ -91,5 +74,35 @@ export default class Chart extends React.Component<IChartProps, IChartState> {
           loading: false,
         });
       });
+  }
+
+  public chartData() {
+    const colors = ["#0078d4", "#bad80a", "#00b294", "#5c2d91", "#e3008c"];
+
+    // Chart Data
+    const data = {
+      labels: ["Q1", "Q2", "Q3", "Q4"],
+      datasets: [],
+    };
+
+    // Add dataset
+    this.state.items.map((item, index) => {
+      // Create dataset
+      const dataset = {
+        label: item.Title,
+        data: [
+          item.EarningsQ1,
+          item.EarningsQ2,
+          item.EarningsQ3,
+          item.EarningsQ4,
+        ],
+        backgroundColor: colors[index % colors.length],
+        borderColor: colors[index % colors.length],
+      };
+
+      data.datasets.push(dataset);
+    });
+
+    return data;
   }
 }

@@ -43,7 +43,7 @@ class SharePointServiceManager {
     selectedFields?: string[]
   ): Promise<IListItemCollection> {
     return this.get(
-      `_api/web/lists/getbyid("${listId}")/items${
+      `/_api/web/lists/getbyid('${listId}')/items${
         selectedFields ? `?$select=${selectedFields.join(",")}` : ""
       }`
     );
@@ -54,7 +54,7 @@ class SharePointServiceManager {
     showHiddenFields: boolean = false
   ): Promise<IListFieldCollection> {
     return this.get(
-      `/_api/lists/getbyid('${listId}')/fields${
+      `/_api/web/lists/getbyid('${listId}')/fields${
         !showHiddenFields ? "?$filter=Hidden eq false" : ""
       }`
     );
