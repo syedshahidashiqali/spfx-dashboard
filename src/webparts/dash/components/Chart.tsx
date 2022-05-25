@@ -62,7 +62,7 @@ export default class Chart extends React.Component<IChartProps, IChartState> {
   public getItems(): void {
     this.setState({ loading: true });
 
-    SharePointService.getListItems("8eedf5f2-c649-495f-90ed-b3c390f6892a")
+    SharePointService.getListItems(this.props.listId)
       .then((items) => {
         this.setState({
           items: items.value,
