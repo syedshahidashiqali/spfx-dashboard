@@ -7,6 +7,7 @@ import {
 } from "@microsoft/sp-core-library";
 import {
   IPropertyPaneConfiguration,
+  IPropertyPaneDropdownOption,
   PropertyPaneDropdown,
   PropertyPaneTextField,
 } from "@microsoft/sp-property-pane";
@@ -35,6 +36,10 @@ import { SPHttpClient } from "@microsoft/sp-http";
 import SharePointService from "../../services/SharePoint/SharePointService";
 
 export default class DashWebPart extends BaseClientSideWebPart<IDashWebPartProps> {
+  // List options state
+  private listOptions: IPropertyPaneDropdownOption[];
+  private listOptionsLoading: boolean = false;
+
   private _isDarkTheme: boolean = false;
   private _environmentMessage: string = "";
 
@@ -113,8 +118,10 @@ export default class DashWebPart extends BaseClientSideWebPart<IDashWebPartProps
             {
               groupName: "Chart Data",
               groupFields: [
-                PropertyPaneTextField("listId", {
+                PropertyPaneDropdown("listId", {
                   label: "List",
+                  options: this.listOptions,
+                  disabled: this.listOptionsLoading,
                 }),
                 PropertyPaneTextField("selectedFields", {
                   label: "Selected Fields",
@@ -181,5 +188,29 @@ export default class DashWebPart extends BaseClientSideWebPart<IDashWebPartProps
         },
       ],
     };
+  }
+
+  private getLists(): Promise<IPropertyPaneDropdownOption[]> {
+    this.listOptionsLoading = true;
+    this.context.propertyPane.refresh();
+
+    return SharePointService.getLists().then((lists) => {
+      this.listOptionsLoading = false;
+      this.context.propertyPane.refresh();
+
+      return lists.value.map((list) => {
+        return {
+          key: list.Id,
+          text: list.Title,
+        };
+      });
+    });
+  }
+
+  protected onPropertyPaneConfigurationStart(): void {
+    this.getLists().then((listOptions) => {
+      this.listOptions = listOptions;
+      this.context.propertyPane.refresh();
+    });
   }
 }
