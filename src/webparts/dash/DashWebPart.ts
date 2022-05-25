@@ -21,10 +21,11 @@ import {
   PropertyFieldColorPicker,
   PropertyFieldColorPickerStyle,
 } from "@pnp/spfx-property-controls/lib/PropertyFieldColorPicker";
+import { PropertyFieldMultiSelect } from "@pnp/spfx-property-controls/lib/PropertyFieldMultiSelect";
 
 export interface IDashWebPartProps {
   listId: string;
-  selectedFields: string;
+  selectedFields: string[];
   chartType: string;
   chartTitle: string;
   color1: string;
@@ -40,6 +41,10 @@ export default class DashWebPart extends BaseClientSideWebPart<IDashWebPartProps
   private listOptions: IPropertyPaneDropdownOption[];
   private listOptionsLoading: boolean = false;
 
+  // Field options state
+  private fieldOptions: IPropertyPaneDropdownOption[];
+  private fieldOptionsLoading: boolean = false;
+
   private _isDarkTheme: boolean = false;
   private _environmentMessage: string = "";
 
@@ -54,7 +59,7 @@ export default class DashWebPart extends BaseClientSideWebPart<IDashWebPartProps
   public render(): void {
     const element: React.ReactElement<IDashProps> = React.createElement(Dash, {
       listId: this.properties.listId,
-      selectedFields: this.properties.selectedFields.split(","),
+      selectedFields: this.properties.selectedFields,
       chartType: this.properties.chartType,
       chartTitle: this.properties.chartTitle,
       colors: [
@@ -123,8 +128,12 @@ export default class DashWebPart extends BaseClientSideWebPart<IDashWebPartProps
                   options: this.listOptions,
                   disabled: this.listOptionsLoading,
                 }),
-                PropertyPaneTextField("selectedFields", {
+                PropertyFieldMultiSelect("selectedFields", {
+                  key: "selectedFields",
                   label: "Selected Fields",
+                  options: this.fieldOptions,
+                  disabled: this.fieldOptionsLoading,
+                  selectedKeys: this.properties.selectedFields,
                 }),
               ],
             },
@@ -207,10 +216,56 @@ export default class DashWebPart extends BaseClientSideWebPart<IDashWebPartProps
     });
   }
 
+  public getFields(): Promise<IPropertyPaneDropdownOption[]> {
+    // No list selected
+    // if (!this.properties.listId) return Promise.resolve();
+
+    this.fieldOptionsLoading = true;
+    this.context.propertyPane.refresh();
+
+    return SharePointService.getListFields(this.properties.listId).then(
+      (fields) => {
+        this.fieldOptionsLoading = false;
+        this.context.propertyPane.refresh();
+
+        return fields.value.map((field) => {
+          return {
+            key: field.InternalName,
+            text: `${field.Title} (${field.TypeAsString})`,
+          };
+        });
+      }
+    );
+  }
+
   protected onPropertyPaneConfigurationStart(): void {
-    this.getLists().then((listOptions) => {
-      this.listOptions = listOptions;
-      this.context.propertyPane.refresh();
-    });
+    this.getLists()
+      .then((listOptions) => {
+        this.listOptions = listOptions;
+        this.context.propertyPane.refresh();
+      })
+      .then(() => {
+        this.getFields().then((fieldOptions) => {
+          this.fieldOptions = fieldOptions;
+          this.context.propertyPane.refresh();
+        });
+      });
+  }
+
+  protected onPropertyPaneFieldChanged(
+    propertyPath: string,
+    oldValue: any,
+    newValue: any
+  ): void {
+    super.onPropertyPaneFieldChanged(propertyPath, oldValue, newValue);
+
+    if (propertyPath === "listId" && newValue) {
+      this.properties.selectedFields = [];
+
+      this.getFields().then((fieldOptions) => {
+        this.fieldOptions = fieldOptions;
+        this.context.propertyPane.refresh();
+      });
+    }
   }
 }
