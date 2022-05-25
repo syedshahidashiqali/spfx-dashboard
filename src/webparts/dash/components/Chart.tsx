@@ -79,8 +79,6 @@ export default class Chart extends React.Component<IChartProps, IChartState> {
   }
 
   public chartData() {
-    const colors = ["#0078d4", "#bad80a", "#00b294", "#5c2d91", "#e3008c"];
-
     // Chart Data
     const data = {
       labels: ["Q1", "Q2", "Q3", "Q4"],
@@ -98,8 +96,8 @@ export default class Chart extends React.Component<IChartProps, IChartState> {
           item.EarningsQ3,
           item.EarningsQ4,
         ],
-        backgroundColor: colors[index % colors.length],
-        borderColor: colors[index % colors.length],
+        backgroundColor: this.props.colors[index % this.props.colors.length],
+        borderColor: this.props.colors[index % this.props.colors.length],
       };
 
       data.datasets.push(dataset);
