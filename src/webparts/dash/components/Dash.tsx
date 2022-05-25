@@ -6,17 +6,15 @@ import Chart from "./Chart";
 
 export default class Dash extends React.Component<IDashProps, {}> {
   public render(): React.ReactElement<IDashProps> {
-    const {
-      description,
-      isDarkTheme,
-      environmentMessage,
-      hasTeamsContext,
-      userDisplayName,
-    } = this.props;
-
     return (
       <section className={styles.dash}>
-        <Chart chartTitle="My New Chart" />
+        <Chart
+          chartTitle={this.props.chartTitle}
+          listId={this.props.listId}
+          selectedFields={this.props.selectedFields}
+          chartType={this.props.chartType}
+          colors={this.props.colors}
+        />
       </section>
     );
   }
