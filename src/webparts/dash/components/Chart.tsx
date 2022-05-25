@@ -81,7 +81,7 @@ export default class Chart extends React.Component<IChartProps, IChartState> {
   public chartData() {
     // Chart Data
     const data = {
-      labels: ["Q1", "Q2", "Q3", "Q4"],
+      labels: [],
       datasets: [],
     };
 
@@ -89,16 +89,37 @@ export default class Chart extends React.Component<IChartProps, IChartState> {
     this.state.items.map((item, index) => {
       // Create dataset
       const dataset = {
-        label: item.Title,
-        data: [
-          item.EarningsQ1,
-          item.EarningsQ2,
-          item.EarningsQ3,
-          item.EarningsQ4,
-        ],
+        label: "",
+        data: [],
         backgroundColor: this.props.colors[index % this.props.colors.length],
         borderColor: this.props.colors[index % this.props.colors.length],
       };
+
+      // Build dataset
+      this.props.selectedFields.map((field, j) => {
+        // Get the value
+        let value = item[field];
+
+        if (value === undefined && item[`OData_${field}`] !== undefined) {
+          value = item[`OData_${field}`];
+        }
+
+        // Add labels
+        if (index == 0 && j > 0) {
+          data.labels.push(field);
+        }
+
+        if (j == 0) {
+          dataset.label = value;
+        } else {
+          dataset.data.push(value);
+        }
+      });
+
+      // Line chart
+      if (this.props.chartType == "Line") {
+        dataset["fill"] = false;
+      }
 
       data.datasets.push(dataset);
     });
