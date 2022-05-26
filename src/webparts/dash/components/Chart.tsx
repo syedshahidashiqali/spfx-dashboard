@@ -5,6 +5,7 @@ import SharePointService from "../../../services/SharePoint/SharePointService";
 import { Bar, Line, Pie, Doughnut } from "react-chartjs-2";
 import { Chart as Charts, registerables } from "chart.js";
 Charts.register(...registerables);
+import { Spinner, SpinnerSize } from "office-ui-fabric-react";
 
 export interface IChartProps {
   chartTitle: string;
@@ -43,15 +44,26 @@ export default class Chart extends React.Component<IChartProps, IChartState> {
 
         {this.state.error && <p>{this.state.error}</p>}
 
-        {this.props.chartType == "Bar" && <Bar data={this.chartData()} />}
-        {this.props.chartType == "HorizontalBar" && (
-          <Bar data={this.chartData()} options={{ indexAxis: "y" }} />
-        )}
-        {this.props.chartType == "Line" && <Line data={this.chartData()} />}
-        {this.props.chartType == "Pie" && <Pie data={this.chartData()} />}
-        {this.props.chartType == "Doughnut" && (
-          <Doughnut data={this.chartData()} />
-        )}
+        <div className={styles.chartBody}>
+          {this.state.loading && (
+            <Spinner
+              className={styles.chartSpinner}
+              size={SpinnerSize.large}
+              label="Loading chart data..."
+              ariaLive="assertive"
+            />
+          )}
+
+          {this.props.chartType == "Bar" && <Bar data={this.chartData()} />}
+          {this.props.chartType == "HorizontalBar" && (
+            <Bar data={this.chartData()} options={{ indexAxis: "y" }} />
+          )}
+          {this.props.chartType == "Line" && <Line data={this.chartData()} />}
+          {this.props.chartType == "Pie" && <Pie data={this.chartData()} />}
+          {this.props.chartType == "Doughnut" && (
+            <Doughnut data={this.chartData()} />
+          )}
+        </div>
 
         <button onClick={this.getItems} disabled={this.state.loading}>
           {this.state.loading ? "Loading..." : "Refresh"}
