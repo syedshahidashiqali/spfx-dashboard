@@ -1,14 +1,30 @@
 declare interface IDashWebPartStrings {
+  ChartBar: string;
+  ChartBarHorizontal: string;
+  ChartData: string;
+  ChartDoughnut: string;
+  ChartLine: string;
+  ChartPie: string;
+  ChartSettings: string;
+  ChartStyle: string;
+  ChartTitle: string;
+  ChartType: string;
+  Colors: string;
+  Error: string;
+  Intro: string;
+  List: string;
+  Loading: string;
+  LoadingChartData: string;
+  Refresh: string;
   PropertyPaneDescription: string;
-  BasicGroupName: string;
-  DescriptionFieldLabel: string;
+  SelectedFields: string;
   AppLocalEnvironmentSharePoint: string;
   AppLocalEnvironmentTeams: string;
   AppSharePointEnvironment: string;
   AppTeamsTabEnvironment: string;
 }
 
-declare module 'DashWebPartStrings' {
+declare module "DashWebPartStrings" {
   const strings: IDashWebPartStrings;
   export = strings;
 }

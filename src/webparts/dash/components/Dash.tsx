@@ -2,6 +2,7 @@ import * as React from "react";
 import { IDashProps } from "./IDashProps";
 import Chart from "./Chart";
 import { MessageBar } from "office-ui-fabric-react";
+import * as strings from "DashWebPartStrings";
 
 export default class Dash extends React.Component<IDashProps, {}> {
   public render(): React.ReactElement<IDashProps> {
@@ -16,7 +17,7 @@ export default class Dash extends React.Component<IDashProps, {}> {
             colors={this.props.colors}
           />
         ) : (
-          <MessageBar>Select a list to continue&hellip;</MessageBar>
+          <MessageBar>{strings.Intro}</MessageBar>
         )}
       </section>
     );

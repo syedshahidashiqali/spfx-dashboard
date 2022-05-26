@@ -112,20 +112,20 @@ export default class DashWebPart extends BaseClientSideWebPart<IDashWebPartProps
       pages: [
         {
           header: {
-            description: "Dash Settings",
+            description: strings.PropertyPaneDescription,
           },
           groups: [
             {
-              groupName: "Chart Data",
+              groupName: strings.ChartData,
               groupFields: [
                 PropertyPaneDropdown("listId", {
-                  label: "List",
+                  label: strings.List,
                   options: this.listOptions,
                   disabled: this.listOptionsLoading,
                 }),
                 PropertyFieldMultiSelect("selectedFields", {
                   key: "selectedFields",
-                  label: "Selected Fields",
+                  label: strings.SelectedFields,
                   options: this.fieldOptions,
                   disabled: this.fieldOptionsLoading,
                   selectedKeys: this.properties.selectedFields,
@@ -133,28 +133,28 @@ export default class DashWebPart extends BaseClientSideWebPart<IDashWebPartProps
               ],
             },
             {
-              groupName: "Chart Settings",
+              groupName: strings.ChartSettings,
               groupFields: [
                 PropertyPaneDropdown("chartType", {
-                  label: "Chart Type",
+                  label: strings.ChartType,
                   options: [
-                    { key: "Bar", text: "Bar" },
-                    { key: "HorizontalBar", text: "HorizontalBar" },
-                    { key: "Line", text: "Line" },
-                    { key: "Pie", text: "Pie" },
-                    { key: "Doughnut", text: "Doughnut" },
+                    { key: "Bar", text: strings.ChartBar },
+                    { key: "HorizontalBar", text: strings.ChartBarHorizontal },
+                    { key: "Line", text: strings.ChartLine },
+                    { key: "Pie", text: strings.ChartPie },
+                    { key: "Doughnut", text: strings.ChartDoughnut },
                   ],
                 }),
                 PropertyPaneTextField("chartTitle", {
-                  label: "Chart Title",
+                  label: strings.ChartTitle,
                 }),
               ],
             },
             {
-              groupName: "Chart Style",
+              groupName: strings.ChartStyle,
               groupFields: [
                 PropertyFieldColorPicker("color1", {
-                  label: "Color 1",
+                  label: strings.Colors,
                   selectedColor: this.properties.color1,
                   onPropertyChange: this.onPropertyPaneFieldChanged,
                   properties: this.properties,
@@ -165,7 +165,7 @@ export default class DashWebPart extends BaseClientSideWebPart<IDashWebPartProps
                   key: "colorPicker1",
                 }),
                 PropertyFieldColorPicker("color2", {
-                  label: "Color 2",
+                  label: strings.Colors,
                   selectedColor: this.properties.color2,
                   onPropertyChange: this.onPropertyPaneFieldChanged,
                   properties: this.properties,
@@ -176,7 +176,7 @@ export default class DashWebPart extends BaseClientSideWebPart<IDashWebPartProps
                   key: "colorPicker2",
                 }),
                 PropertyFieldColorPicker("color3", {
-                  label: "Color 3",
+                  label: strings.Colors,
                   selectedColor: this.properties.color3,
                   onPropertyChange: this.onPropertyPaneFieldChanged,
                   properties: this.properties,

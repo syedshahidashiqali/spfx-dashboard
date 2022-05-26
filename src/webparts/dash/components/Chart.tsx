@@ -12,6 +12,7 @@ import {
   MessageBarType,
 } from "office-ui-fabric-react";
 import { MessageBar } from "office-ui-fabric-react";
+import * as strings from "DashWebPartStrings";
 
 export interface IChartProps {
   chartTitle: string;
@@ -59,7 +60,7 @@ export default class Chart extends React.Component<IChartProps, IChartState> {
             <Spinner
               className={styles.chartSpinner}
               size={SpinnerSize.large}
-              label="Loading chart data..."
+              label={strings.LoadingChartData}
               ariaLive="assertive"
             />
           )}
@@ -81,7 +82,7 @@ export default class Chart extends React.Component<IChartProps, IChartState> {
             onClick={this.getItems}
             disabled={this.state.loading}
           >
-            {this.state.loading ? "Loading..." : "Refresh"}
+            {this.state.loading ? strings.Loading : strings.Refresh}
           </ActionButton>
         </footer>
       </div>
@@ -105,7 +106,7 @@ export default class Chart extends React.Component<IChartProps, IChartState> {
       })
       .catch((error) => {
         this.setState({
-          error: "Something went wrong!",
+          error: strings.Error,
           loading: false,
         });
       });
