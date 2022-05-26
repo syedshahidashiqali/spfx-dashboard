@@ -1,10 +1,6 @@
 import * as React from "react";
 import * as ReactDom from "react-dom";
-import {
-  Environment,
-  EnvironmentType,
-  Version,
-} from "@microsoft/sp-core-library";
+import { Environment, Version } from "@microsoft/sp-core-library";
 import {
   IPropertyPaneConfiguration,
   IPropertyPaneDropdownOption,
@@ -33,7 +29,6 @@ export interface IDashWebPartProps {
   color3: string;
 }
 
-import { SPHttpClient } from "@microsoft/sp-http";
 import SharePointService from "../../services/SharePoint/SharePointService";
 
 export default class DashWebPart extends BaseClientSideWebPart<IDashWebPartProps> {
