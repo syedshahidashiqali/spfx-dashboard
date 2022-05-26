@@ -5,7 +5,13 @@ import SharePointService from "../../../services/SharePoint/SharePointService";
 import { Bar, Line, Pie, Doughnut } from "react-chartjs-2";
 import { Chart as Charts, registerables } from "chart.js";
 Charts.register(...registerables);
-import { Spinner, SpinnerSize, ActionButton } from "office-ui-fabric-react";
+import {
+  Spinner,
+  SpinnerSize,
+  ActionButton,
+  MessageBarType,
+} from "office-ui-fabric-react";
+import { MessageBar } from "office-ui-fabric-react";
 
 export interface IChartProps {
   chartTitle: string;
@@ -42,7 +48,11 @@ export default class Chart extends React.Component<IChartProps, IChartState> {
       <div>
         <h1 className={styles.chartTitle}>{this.props.chartTitle}</h1>
 
-        {this.state.error && <p>{this.state.error}</p>}
+        {this.state.error && (
+          <MessageBar messageBarType={MessageBarType.error}>
+            {this.state.error}
+          </MessageBar>
+        )}
 
         <div className={styles.chartBody}>
           {this.state.loading && (
