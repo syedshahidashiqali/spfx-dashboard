@@ -88,6 +88,10 @@ export default class Chart extends React.Component<IChartProps, IChartState> {
     );
   }
 
+  public componentDidMount(): void {
+    this.getItems();
+  }
+
   public getItems(): void {
     this.setState({ loading: true });
 
