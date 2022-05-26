@@ -22,7 +22,7 @@ export interface IPropertyPaneColorPaletteInternalProps
   extends IPropertyPaneColorPaletteProps,
     IPropertyPaneCustomFieldProps {}
 
-class PropertyPaneColorPalette
+export class PropertyPaneColorPalette
   implements IPropertyPaneField<IPropertyPaneColorPaletteProps>
 {
   public type: PropertyPaneFieldType = PropertyPaneFieldType.Custom;
