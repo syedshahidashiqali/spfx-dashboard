@@ -5,7 +5,7 @@ import SharePointService from "../../../services/SharePoint/SharePointService";
 import { Bar, Line, Pie, Doughnut } from "react-chartjs-2";
 import { Chart as Charts, registerables } from "chart.js";
 Charts.register(...registerables);
-import { Spinner, SpinnerSize } from "office-ui-fabric-react";
+import { Spinner, SpinnerSize, ActionButton } from "office-ui-fabric-react";
 
 export interface IChartProps {
   chartTitle: string;
@@ -65,9 +65,15 @@ export default class Chart extends React.Component<IChartProps, IChartState> {
           )}
         </div>
 
-        <button onClick={this.getItems} disabled={this.state.loading}>
-          {this.state.loading ? "Loading..." : "Refresh"}
-        </button>
+        <footer className={styles.chartFooter}>
+          <ActionButton
+            iconProps={{ iconName: "Refresh" }}
+            onClick={this.getItems}
+            disabled={this.state.loading}
+          >
+            {this.state.loading ? "Loading..." : "Refresh"}
+          </ActionButton>
+        </footer>
       </div>
     );
   }
