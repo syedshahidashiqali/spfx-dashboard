@@ -7,7 +7,7 @@ export default class Dash extends React.Component<IDashProps, {}> {
   public render(): React.ReactElement<IDashProps> {
     return (
       <section>
-        {this.props.listId ? (
+        {this.props.listId && this.props.selectedFields.length ? (
           <Chart
             chartTitle={this.props.chartTitle}
             listId={this.props.listId}
