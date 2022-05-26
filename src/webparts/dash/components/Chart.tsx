@@ -39,7 +39,7 @@ export default class Chart extends React.Component<IChartProps, IChartState> {
   public render(): JSX.Element {
     return (
       <div>
-        <h1>{this.props.chartTitle}</h1>
+        <h1 className={styles.chartTitle}>{this.props.chartTitle}</h1>
 
         {this.state.error && <p>{this.state.error}</p>}
 
