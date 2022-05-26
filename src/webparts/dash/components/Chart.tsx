@@ -1,4 +1,5 @@
 import * as React from "react";
+import styles from "./Chart.module.scss";
 import { IListItem } from "../../../services/SharePoint/IListItem";
 import SharePointService from "../../../services/SharePoint/SharePointService";
 import { Bar, Line, Pie, Doughnut } from "react-chartjs-2";
