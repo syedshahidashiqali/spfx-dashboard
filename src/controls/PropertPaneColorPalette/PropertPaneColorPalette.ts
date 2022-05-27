@@ -8,7 +8,7 @@ import {
 import {
   ColorPalette,
   IColorPaletteProps,
-} from "./components/PropertyPaneColorPalette";
+} from "./components/ColorPalette";
 
 export interface IPropertyPaneColorPaletteProps {
   label: string;
