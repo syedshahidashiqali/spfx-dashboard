@@ -12,6 +12,8 @@ export class ColorPalette extends React.Component<IColorPaletteProps> {
     super(props);
 
     // Bind methods
+    this.onChanged = this.onChanged.bind(this);
+    this.addColor = this.addColor.bind(this);
   }
 
   public render(): JSX.Element {
@@ -27,6 +29,7 @@ export class ColorPalette extends React.Component<IColorPaletteProps> {
             />
           );
         })}
+        <button onClick={this.addColor}>Add Color</button>
       </div>
     );
   }
@@ -38,6 +41,13 @@ export class ColorPalette extends React.Component<IColorPaletteProps> {
     if (newColor == null) {
       updatedColors.splice(index, 1);
     }
+
+    this.props.onChanged(updatedColors);
+  }
+
+  public addColor(): void {
+    const updatedColors = this.props.colors;
+    updatedColors.push("#000000");
 
     this.props.onChanged(updatedColors);
   }
