@@ -14,6 +14,12 @@ export class ColorPalette extends React.Component<IColorPaletteProps> {
   }
 
   public render(): JSX.Element {
-    return <div>Color Pickers!</div>;
+    return (
+      <div>
+        {this.props.colors.map((color, index) => {
+          return <input type="text" value={color} key={index} />;
+        })}
+      </div>
+    );
   }
 }
