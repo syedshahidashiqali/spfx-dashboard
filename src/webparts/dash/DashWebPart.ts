@@ -229,6 +229,10 @@ export default class DashWebPart extends BaseClientSideWebPart<IDashWebPartProps
         this.fieldOptions = fieldOptions;
         this.context.propertyPane.refresh();
       });
+    } else if (propertyPath == "colors" && newValue) {
+      this.properties.colors = newValue;
+      this.context.propertyPane.refresh();
+      this.render();
     }
   }
 }

@@ -17,9 +17,25 @@ export class ColorPalette extends React.Component<IColorPaletteProps> {
     return (
       <div>
         {this.props.colors.map((color, index) => {
-          return <input type="text" value={color} key={index} />;
+          return (
+            <input
+              type="text"
+              value={color}
+              key={index}
+              onChange={(event) =>
+                this.onChanged(event.currentTarget.value, index)
+              }
+            />
+          );
         })}
       </div>
     );
+  }
+
+  public onChanged(newColor: string, index: number): void {
+    const updatedColors = this.props.colors;
+    updatedColors[index] = newColor;
+
+    this.props.onChanged(updatedColors);
   }
 }
