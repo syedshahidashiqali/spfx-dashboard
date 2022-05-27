@@ -1,4 +1,5 @@
 import * as React from "react";
+import ColorSwatch from "./ColorSwatch";
 
 export interface IColorPaletteProps {
   colors: string[];
@@ -18,13 +19,11 @@ export class ColorPalette extends React.Component<IColorPaletteProps> {
       <div>
         {this.props.colors.map((color, index) => {
           return (
-            <input
-              type="text"
-              value={color}
+            <ColorSwatch
               key={index}
-              onChange={(event) =>
-                this.onChanged(event.currentTarget.value, index)
-              }
+              color={color}
+              onColorChanged={(newColor) => this.onChanged(newColor, index)}
+              onColorDeleted={() => this.onChanged(null, index)}
             />
           );
         })}
@@ -35,6 +34,10 @@ export class ColorPalette extends React.Component<IColorPaletteProps> {
   public onChanged(newColor: string, index: number): void {
     const updatedColors = this.props.colors;
     updatedColors[index] = newColor;
+
+    if (newColor == null) {
+      updatedColors.splice(index, 1);
+    }
 
     this.props.onChanged(updatedColors);
   }
