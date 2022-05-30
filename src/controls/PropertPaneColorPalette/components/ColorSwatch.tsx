@@ -7,6 +7,7 @@ import {
   DefaultButton,
 } from "office-ui-fabric-react";
 import styles from "./ColorSwatch.module.scss";
+import * as strings from "DashWebPartStrings";
 
 export interface IColorSwatchProps {
   color: string;
@@ -61,7 +62,7 @@ export default class ColorSwatch extends React.Component<
           />
           <footer className={styles.swatchActions}>
             <DefaultButton
-              text="Delete"
+              text={strings.DeleteColor}
               iconProps={{ iconName: "Delete" }}
               onClick={this.props.onColorDeleted}
             />

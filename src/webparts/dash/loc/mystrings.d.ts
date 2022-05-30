@@ -18,6 +18,8 @@ declare interface IDashWebPartStrings {
   Refresh: string;
   PropertyPaneDescription: string;
   SelectedFields: string;
+  AddColor: string;
+  DeleteColor: string;
   AppLocalEnvironmentSharePoint: string;
   AppLocalEnvironmentTeams: string;
   AppSharePointEnvironment: string;

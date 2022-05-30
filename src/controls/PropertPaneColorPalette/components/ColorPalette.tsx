@@ -2,6 +2,7 @@ import * as React from "react";
 import ColorSwatch from "./ColorSwatch";
 import styles from "./ColorPalette.module.scss";
 import { Icon } from "office-ui-fabric-react";
+import * as strings from "DashWebPartStrings";
 
 export interface IColorPaletteProps {
   colors: string[];
@@ -36,7 +37,7 @@ export class ColorPalette extends React.Component<IColorPaletteProps> {
           <span
             className="ms-screenReaderOnly"
             role="span"
-            aria-labelledby="Add Color"
+            aria-labelledby={strings.AddColor}
           />
         </button>
       </div>
