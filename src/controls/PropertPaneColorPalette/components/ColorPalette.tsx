@@ -1,6 +1,7 @@
 import * as React from "react";
 import ColorSwatch from "./ColorSwatch";
 import styles from "./ColorPalette.module.scss";
+import { Icon } from "office-ui-fabric-react";
 
 export interface IColorPaletteProps {
   colors: string[];
@@ -19,7 +20,7 @@ export class ColorPalette extends React.Component<IColorPaletteProps> {
 
   public render(): JSX.Element {
     return (
-      <div>
+      <div className={styles.colorGrid}>
         {this.props.colors.map((color, index) => {
           return (
             <ColorSwatch
@@ -30,7 +31,9 @@ export class ColorPalette extends React.Component<IColorPaletteProps> {
             />
           );
         })}
-        <button onClick={this.addColor}>Add Color</button>
+        <button className={styles.addColorBtn} onClick={this.addColor}>
+          <Icon iconName="Add" />
+        </button>
       </div>
     );
   }
