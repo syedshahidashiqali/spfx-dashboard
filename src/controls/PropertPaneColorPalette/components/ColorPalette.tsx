@@ -38,7 +38,7 @@ export class ColorPalette extends React.Component<IColorPaletteProps> {
     const updatedColors = this.props.colors;
     updatedColors[index] = newColor;
 
-    if (newColor == null) {
+    if (newColor === null) {
       updatedColors.splice(index, 1);
     }
 
