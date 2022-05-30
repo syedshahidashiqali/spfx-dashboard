@@ -33,6 +33,11 @@ export class ColorPalette extends React.Component<IColorPaletteProps> {
         })}
         <button className={styles.addColorBtn} onClick={this.addColor}>
           <Icon iconName="Add" />
+          <span
+            className="ms-screenReaderOnly"
+            role="span"
+            aria-labelledby="Add Color"
+          />
         </button>
       </div>
     );
