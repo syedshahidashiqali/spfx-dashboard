@@ -1,5 +1,6 @@
 import * as React from "react";
 import ColorSwatch from "./ColorSwatch";
+import styles from "./ColorPalette.module.scss";
 
 export interface IColorPaletteProps {
   colors: string[];

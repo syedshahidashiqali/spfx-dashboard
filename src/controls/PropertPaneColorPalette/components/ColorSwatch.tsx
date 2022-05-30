@@ -4,7 +4,9 @@ import {
   Callout,
   DirectionalHint,
   IColor,
+  DefaultButton,
 } from "office-ui-fabric-react";
+import styles from "./ColorSwatch.module.scss";
 
 export interface IColorSwatchProps {
   color: string;
@@ -37,7 +39,12 @@ export default class ColorSwatch extends React.Component<
   public render(): JSX.Element {
     return (
       <div>
-        <button ref={this.pickBtnRef} onClick={this.togglePick}>
+        <button
+          className={styles.colorSwatch}
+          ref={this.pickBtnRef}
+          onClick={this.togglePick}
+          style={{ backgroundColor: this.props.color }}
+        >
           {this.props.color}
         </button>
         <Callout
@@ -52,7 +59,13 @@ export default class ColorSwatch extends React.Component<
               this.props.onColorChanged(colorObj.str)
             }
           />
-          <button onClick={this.props.onColorDeleted}>Delete</button>
+          <footer className={styles.swatchActions}>
+            <DefaultButton
+              text="Delete"
+              iconProps={{ iconName: "Delete" }}
+              onClick={this.props.onColorDeleted}
+            />
+          </footer>
         </Callout>
       </div>
     );
