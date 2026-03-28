@@ -1,73 +1,121 @@
-# dash
+# SharePoint Dashboard Web Part
 
-## Summary
-
-Short summary on functionality and used technologies.
-
-[picture of the solution in action, if possible]
-
-## Used SharePoint Framework Version
-
-![version](https://img.shields.io/badge/version-1.13-green.svg)
-
-## Applies to
-
-- [SharePoint Framework](https://aka.ms/spfx)
-- [Microsoft 365 tenant](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tenant)
-
-> Get your own free development tenant by subscribing to [Microsoft 365 developer program](http://aka.ms/o365devprogram)
-
-## Prerequisites
-
-> Any special pre-requisites?
-
-## Solution
-
-Solution|Author(s)
---------|---------
-folder name | Author details (name, company, twitter alias with link)
-
-## Version history
-
-Version|Date|Comments
--------|----|--------
-1.1|March 10, 2021|Update comment
-1.0|January 29, 2021|Initial release
-
-## Disclaimer
-
-**THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
-
----
-
-## Minimal Path to Awesome
-
-- Clone this repository
-- Ensure that you are at the solution folder
-- in the command-line run:
-  - **npm install**
-  - **gulp serve**
-
-> Include any additional steps as needed.
+A modern **SharePoint Framework (SPFx)** client-side web part that visualizes data from any SharePoint list using **Chart.js**.
 
 ## Features
 
-Description of the extension that expands upon high-level summary above.
+- **Dynamic Data Source**: Select any SharePoint list and multiple fields to visualize
+- **Multiple Chart Types**:
+  - Bar
+  - Horizontal Bar
+  - Line
+  - Pie
+  - Doughnut
+- **Custom Color Palette**: Add, edit, and delete colors with a built-in color picker
+- **Responsive Design**: Works well in SharePoint pages and Microsoft Teams
+- **Dark Theme Support**: Automatically adapts to SharePoint/Teams theme
+- **Live Refresh**: Refresh button to reload data without reloading the page
+- **Property Pane Configuration** with dynamic list and field loading
 
-This extension illustrates the following concepts:
+## How It Works
 
-- topic 1
-- topic 2
-- topic 3
+1. Choose a **SharePoint List**
+2. Select one or more **Fields** (first field is used as label, subsequent fields as data series)
+3. Choose a **Chart Type** and set a **Title**
+4. Customize the **color palette** for your datasets
 
-> Notice that better pictures and documentation will increase the sample usage and the value you are providing for others. Thanks for your submissions advance.
+The web part fetches items from the selected list and builds the chart dynamically.
 
-> Share your web part with others through Microsoft 365 Patterns and Practices program to get visibility and exposure. More details on the community, open-source projects and other activities from http://aka.ms/m365pnp.
+## Technologies Used
 
-## References
+- **SharePoint Framework (SPFx)** v1.14.0
+- **React** 16.13.1
+- **Chart.js** + **react-chartjs-2**
+- **Office UI Fabric React** (now Fluent UI)
+- **@pnp/spfx-property-controls** (for MultiSelect)
+- Custom **Color Palette** property pane control
 
-- [Getting started with SharePoint Framework](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-developer-tenant)
-- [Building for Microsoft teams](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/build-for-teams-overview)
-- [Use Microsoft Graph in your solution](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/using-microsoft-graph-apis)
-- [Publish SharePoint Framework applications to the Marketplace](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/publish-to-marketplace-overview)
-- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp) - Guidance, tooling, samples and open-source controls for your Microsoft 365 development
+## Prerequisites
+
+- Node.js LTS (recommended version for SPFx 1.14)
+- SharePoint Framework development toolchain (`@microsoft/generator-sharepoint`)
+- Access to a SharePoint Online site with a list containing data
+
+## Installation & Deployment
+
+### 1. Clone / Download the project
+
+```bash
+git clone https://github.com/syedshahidashiqali/spfx-dashboard
+cd spfx-dashboard
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Build and serve locally
+
+```bash
+gulp serve
+```
+
+### 4. Bundle and package for deployment
+
+```bash
+gulp bundle --ship
+gulp package-solution --ship
+```
+
+The `.sppkg` file will be generated in the `sharepoint/solution` folder.
+
+### 5. Deploy
+
+- Upload the `.sppkg` to your organization's **App Catalog**
+- Add the **Dash** web part to any modern SharePoint page or Teams tab
+
+## Configuration
+
+In the web part property pane you can configure:
+
+- **List** → Select the source list
+- **Selected Fields** → Choose fields (first = label, rest = data values)
+- **Chart Type** → Bar, Horizontal Bar, Line, Pie, or Doughnut
+- **Chart Title**
+- **Colors** → Customizable color palette (add/edit/delete)
+
+## Project Structure (Key Files)
+
+```
+src/
+├── webparts/dash/
+│   ├── DashWebPart.ts                 # Main web part class
+│   ├── DashWebPart.manifest.json
+│   └── components/
+│       ├── Dash.tsx
+│       ├── Chart.tsx                  # Chart rendering logic
+│       └── Chart.module.scss
+├── services/SharePoint/               # SharePoint REST service layer
+├── controls/PropertPaneColorPalette/  # Custom color picker control
+└── ...
+```
+
+## Known Limitations
+
+- Only supports **numeric** or **countable** values for data series (non-numeric values may cause unexpected behavior)
+- Field selection uses the first selected field as the category label
+- Designed for relatively small lists (performance depends on list size)
+
+## Contributing
+
+Feel free to fork the project and submit pull requests for new features or bug fixes.
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+**Built with ❤️ using SharePoint Framework**
